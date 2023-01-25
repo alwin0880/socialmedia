@@ -1,0 +1,61 @@
+{%extends 'base.html'%}
+{%block body_block%}
+
+
+
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-1"></div>
+        <div class="col-lg-4 col-md-4 col-sm-1" style="margin-top: 8%;">
+            {%for p in post%}
+
+            <div class="col-12 card mb-2 p-1">
+
+                <div class="card-body mb-2">
+                    <div class="container-fluid" style="padding-left: unset; padding-right: unset;">
+                        <div class="row">
+                            <div class="col-2 ">
+                                {%if user.profile_pic%}
+                                <a href="">
+                                    <img src="{{user.profile_pic.url}}" alt="" class="rounded-circle mt-2"
+                                     style="width: 100%;"   >
+                                </a>
+                                {%endif%}
+                            </div>
+                            <div class="col-10" style="padding-left: unset;">
+                                <span class="fs-5">{{p.user}}</span>
+                                {%if p.location%}
+                                <div class="small text-muted">{{p.location}}</div>
+                                {%endif%}
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#!"><img class="card-img-top" src="{{p.image.url}}" alt="..." /></a>
+                    <div class="mt-2">
+                        <a class="fs-4 " href="{%url 'like' p.id%}">
+                            <i class="fa-regular fa-heart me-2"></i>
+                        </a>
+                        <a href="{%url 'postdetail' p.id%}" class="fs-4">
+                            <i class="fa-regular fa-comment"></i>
+                        </a>
+
+                    </div>
+                    <span>{{p.likes.all.count}}</span>like
+                    <div class="small text-muted">{{p.description}}</div>
+
+                    <div class="small text-muted mb-3">{{p.post_date}}</div>
+
+
+                </div>
+            </div>
+
+            {%endfor%}
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-1"></div>
+    </div>
+</div>
+
+{%endblock%}

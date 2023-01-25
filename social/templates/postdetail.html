@@ -1,0 +1,77 @@
+{%extends 'base.html'%}
+{%block body_block%}
+
+
+    <div class="row" style="margin-top: 6%;">
+        <div class="col-lg-2 col-md-4"></div>
+        <div class="col-lg-6 col-md-4 d-none d-lg-block">
+            <!-- <div class="card mb-4">
+                    <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg"
+                            alt="..." /></a> -->
+
+            <div class="card-body " style="min-height: 120%;">
+                <a href="#!"><img class="card-img-top mb-1" src="{{post.image.url}}" alt="..."
+                        style="max-height: 120%; min-height:120%; max-width: 100%; min-width: 100%;">
+                </a>
+                <a class="fs-4 fa" href="{%url 'like' post.id%}">
+                    <i class="fa-regular fa-heart me-2 ms-1"></i>
+                </a>
+                <a href="" class="fs-4">
+                    <i class="fa-regular fa-comment"></i>
+                </a>
+                
+            </div>
+
+
+
+
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-1">
+            <div class="card-body">
+                <h4 class="card-title">{{post.user}}</h4>
+                {%if post.location%}
+                <div class="small text-muted">{{post.location}}</div>
+
+                {%endif%}
+                {%if post.description%}
+                <div class="small text-muted">{{post.description}}</div>
+
+                {%endif%}
+                <hr>
+
+                <ul class="list-group">
+                    {%for comnts in post.comments_set.all%}
+
+                    <li class="list-group-item">
+                        <span class="fw-bolder">{{comnts.user}}</span>
+                        {{comnts.comment}}
+                        <span class="badge float-end">
+                            <a class="" href="{%url 'like' post.id%}">
+                                <i class="fa-regular fa-heart me-2"></i>
+                            </a>
+                            
+                        </span>
+                    </li>
+
+                    {%endfor%}
+                </ul>
+                <!-- comment section -->
+                <div class="fixed-bottom" style="left: 63.5%; bottom: 100px;">
+                    
+                    <form action="{%url 'addcomment' post.id%}" method="post">
+                        {%csrf_token%}
+                        <hr style="width: 74%; margin-left: 18px;">
+                        <div class="input-group ms-4 mb-3">
+                            <textarea class="border border-secondary form-control-sm" name="comments" placeholder="comment"
+                                cols="46" rows="1"></textarea>
+                            <input class="border border-secondary  bg-light form-control-sm" type="submit" value="post">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{%endblock%}
