@@ -14,15 +14,12 @@ class Posts(models.Model):
     location=models.CharField(max_length=200,null=True,blank=True)
     description=models.CharField(max_length=200,null=True,blank=True)
     image=models.ImageField(upload_to='images')
-    post_date=models.DateField(auto_now_add=True)
+    post_date=models.DateTimeField(auto_now_add=True)
     likes=models.ManyToManyField(MyUser,related_name='likes')
     is_active=models.BooleanField(default=True)
     
     def __str__(self):
-        return self.image
-
-
-
+        return self.user
 
 class Comments(models.Model): 
     post=models.ForeignKey(Posts,on_delete=models.CASCADE)

@@ -29,11 +29,13 @@ urlpatterns = [
     path('post/<int:id>/',views.PostDetailsView.as_view(),name='postdetail'),
     path('post/<int:id>/add_comment/',views.addcomment_view,name='addcomment'),
     path('post/<int:id>/like/',views.like_view,name='like'),
-    path('image/',views.ImageView.as_view(),name='images'),
+    path('myprofile/',views.MyProfileView.as_view(),name='myprofile'),
     path("post/<int:id>/remove",views.remove_post,name='remove-post'),
     path('logout/',views.signout_view,name='logout'),
-    path('search/',views.SearchView.as_view(),name='search'),
-    path('update/<int:id>',views.ProfileUpdateView.as_view(),name='update')
+    path('search/',views.ExploreView.as_view(),name='explore'),
+    path('update/<int:id>',views.ProfileUpdateView.as_view(),name='update'),
+    # path("post/search/",views.SearchView.as_view(),name="search")
+    path("searchbar/",views.searchbar,name="searchbar")
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

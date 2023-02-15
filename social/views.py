@@ -39,20 +39,27 @@ class IndexView(ListView):
     context_object_name='post'
 
     def get_queryset(self):              #query set le enthaghilum change cheyanaghil get_queryset enna method override cheytha mathi
-        return Posts.objects.all()     
+        return Posts.objects.all().order_by("-post_date")    
 
 
 
 
 @method_decorator(signin_reqired,name='dispatch')
-class SearchView(ListView):
-    template_name='search.html'
+class ExploreView(ListView):
+    template_name='explore.html'
     model=Posts
-    context_object_name='search'
+    context_object_name='explore'
 
     def get_queryset(self):             
         return Posts.objects.all().exclude(user=self.request.user) 
-    
+
+@signin_reqired  
+def searchbar(request):
+    if request.method=='GET':
+        search=request.GET.get("search")
+        post=MyUser.objects.all().filter(username=search)
+        return render(request,"searchbar.html",{"post":post})
+
 
 
 class RegistrationView(CreateView):
@@ -102,7 +109,7 @@ def like_view(request,*args,**kwargs):
 
 
 @method_decorator(signin_reqired,name='dispatch')
-class ImageView(ListView):
+class MyProfileView(ListView):
     model=Posts
     template_name='profile.html'
     context_object_name='images'
@@ -110,24 +117,21 @@ class ImageView(ListView):
     def get_queryset(self):
         return Posts.objects.filter(user=self.request.user)
 
-
+@signin_reqired
 def remove_post(request,*args,**kwargs):
     id=kwargs.get('id')
     Posts.objects.get(id=id).delete()
     return redirect('index')
 
-
+@method_decorator(signin_reqired,name='dispatch')
 class ProfileUpdateView(UpdateView):
     model=MyUser
     template_name="profile-update.html"
     form_class=ProfileUpdateForm
     pk_url_kwarg="id"
-    success_url=reverse_lazy('images')
+    success_url=reverse_lazy('myprofile')
     
     
-
-
-
 
 @signin_reqired
 def signout_view(request,*args,**kwargs):
